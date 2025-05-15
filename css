@@ -1,1 +1,222 @@
+/*body*/
+
+    body {
+        background-color: #2b2b30;
+      }
+      h3 {
+        color: #5c1812;
+      }
+
+      /* navbar */
+      #navbarContainer {
+        display: flex;
+        justify-content: center;
+        background-color: #5c1812;
+      }
+      #navbarContent {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+      .nav-link {
+        padding: 1rem 1.5rem;
+        color: #c7b9b7;
+      }
+      .nav-link:hover {
+        color: #f0e7e1;
+      }
+      .active {
+        color: #f0e7e1;
+        font-weight: bold;
+      }
+      #logoNav {
+        display: flex;
+        max-width: 15%;
+        padding: 0;
+      }
+
+          /*banner*/ 
+
+    #bannerContainer {
+    width: 1480px; 
+    /* display: flex; */
+    justify-content: center;
+    margin-bottom: -7vw;
+    }
+
+    #bannerTxtContainer {
+        margin-left: 5vw;
+        justify-content: left;
+      }
+      
+      #bannerTxt {
+        position: static;
+        transform: translateY(-140%);
+        /* transform: translateZ(1); */
+        font-size: 2rem;
+        font-weight: bold;
+        color: #5c1812;
+        /* margin-left: 2vw; */
+      }
+
+    
+      /* about us */
+      
+      #aboutContainer {
+        margin: 2rem 1rem 4rem 1rem;
+        padding: 1rem; 
+        background-color: #f0e7e1;
+      }
+
+      /* our products */
+      #prodContainer {
+        margin: 2rem 1rem 4rem 1rem;
+        padding: 1rem; 
+        background-color: #f0e7e1;
+      }
+
+      #prodSlideshow {
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        margin-left: 23rem;
+        margin-right: 10rem; 
+        max-width: 50%;
+      }
+      #prodSlideBtnContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+      }
+      .btn {
+        display: flex;
+        text-wrap: nowrap;
+        background-color: #701810 !important;
+        border-color: #701810;
+      }
+      .btn:hover {
+        background-color:rgb(155, 70, 70) !important;
+        border-color:rgb(155, 70, 70) ;
+      }
+      #prodCardsContainer{
+        display:flex;
+        justify-content: space-evenly;
+        margin-top: 5rem;
+      }
+
+      /* contact page */
+
+      #contactContainer {
+        margin: 2rem 1rem 4rem 1rem;
+        padding: 1rem;
+        background-color: #f0e7e1;
+      }
+
+
+      /* footer */
+      #footerContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem 1rem 1rem 1rem;
+        background-color: #5c1812;
+      }
+      #footerContent {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      #logoFooterContainer {
+        display: flex;
+        flex-direction: row;
+        max-width: 30%;
+      }
+      #footLeft {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        align-items: flex-start;
+      }
+      #leftFootTxt {
+        padding: 2rem 0 0 0;
+        align-items: center;
+        color: #c7b9b7;
+      }
+      #address {
+        color: #f0e7e1;
+        font-weight: bold;
+        margin: 1rem 0 0 0;
+      }
+      #footRight {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: min-content;
+        align-items: flex-end;
+        padding: 1rem;
+      }
+      #rightFootTxt {
+        padding: 2rem 0 0 0;
+        text-align: right;
+        color: #c7b9b7;
+      }
+      #fbLogoContainer {
+        max-width: 10%;
+      }
+      .logoA {
+        padding: 0;
+      }
+
+      /* login page */
+
+      #loginContainer {
+        margin-left: 23.5vw;
+        margin-right: 23.5vw;
+        margin-top: 10vw;
+        margin-bottom: 8vw;
+        text-align: center;
+        justify-content: center;
+        border-color: #701810;
+        background-color: #f0e7e1;
+        border-style: solid;
+      }
+
+      #loginTxt {
+        font-size: 5vw;
+        font-weight: bold;
+        color: #5c1812;
+      }
+
+      #loginBtn {
+        justify-content: center;
+        text-align: center;
+      }
+
+      #usernameContainer {
+        justify-content: center;
+        text-align: center;
+      }
+
+      /* user products container */
+
+      #userprodContainer {
+        margin: 2rem 1rem 4rem 1rem;
+        padding: 1rem; 
+        background-color: #f0e7e1;
+      }
+
+      #eachprodContainer {
+        margin: 10px 5px 15px 20px;
+        background-color: #701810;  
+      }
+
+      #prodTxt {
+        color: #c7b9b7;
+        font-size: 2vw;
+      }
+
 
