@@ -75,8 +75,6 @@ if (isset($_POST['sub'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    $_SESSION['username'] = $username;
-
     $loginsql = "Select * from tbl_users where username = '".$username."' AND password = '".$password."' ";
 
     $result = $conn->query($loginsql);
@@ -87,13 +85,31 @@ if (isset($_POST['sub'])) {
         $fielddata = $result->fetch_assoc();
 
 
+        $_SESSION['user_id'] = $fielddata['user_id'];
+        
+        $_SESSION['fullname'] = $fielddata['fullname'];
+
+        $_SESSION['role'] = $fielddata['role'];
+
+        $_SESSION['username'] = $fielddata['username'];
+
+        $_SESSION['password'] = $fielddata['password'];
+
+        $_SESSION['email'] = $fielddata['email'];
+
+        $_SESSION['contact'] = $fielddata['contact'];
+
+        $_SESSION['address'] = $fielddata['address'];
+       
         $id = $fielddata['user_id'];
+
+    
+
+        // $id = $fielddata['user_id'];
 
         $logssql = "insert into tbl_logs (user_id, action, date) values ('".$id."', 'Logged in',NOW())";
 
         $conn->query($logssql);
-
-        $_SESSION['user_id'] = $ids;
 
 
         $user_type = $fielddata['role'];
