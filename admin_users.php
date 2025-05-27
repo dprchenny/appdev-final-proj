@@ -1,0 +1,406 @@
+<?php
+   
+    session_start();
+
+  
+    $user_id = $_SESSION['user_id'];
+
+?>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+         rel="stylesheet">
+    <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<!-- div container -->
+<div class="container column-gap-3">
+
+
+<!-- row container -->
+<div class="row">
+
+
+<!-- sidebar container -->
+<div class="col ms-0">
+
+<nav class="navbar bg-light">
+
+<a href="admindashb.php" class="">Products</a>
+<a href="usertable.php" class="">Users</a>
+
+</nav>
+
+
+</div>
+<!-- sidebar container -->
+
+<!-- table container -->
+    <div class="col-11">
+
+    <!-- search button -->
+
+<form action="admin_users.php" method="post">
+        <div class="row g-5">
+            <div class="col-auto">
+            <input type="search" name="searchinput" id="" placeholder="Search" class="form-control">
+            </div>
+            <div class="col-auto">
+            <input type="submit" name = "search" value="Search" class="btn-primary btn">
+            </div>
+        </div>
+</form>
+
+
+<!-- add new product button -->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add new user
+</button>
+
+<!-- php of displaying table -->
+
+<?php
+
+
+require_once "dbconnection.php";
+
+$selectsql = "Select * from tbl_users";
+
+
+
+
+if (isset($_POST['search'])) {
+    $usersearch = $_POST['searchinput'];
+
+
+    $selectsql = "Select * from tbl_users where user_id like '%".$usersearch."%'
+    OR fullname like '%".$usersearch."%'
+    OR email like '%".$usersearch."%'
+    ";
+} else {
+    $selectsql = "Select * from tbl_users";
+}
+
+
+$result = $conn->query($selectsql);
+
+
+if ($result->num_rows > 0) {
+
+?>
+
+<table class="table table-success">
+    <tr>
+        <th>
+            User ID
+        </th>
+        <th>
+            Full Name
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Contact
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Account Status
+        </th>
+    </tr>
+
+
+<?php
+    foreach ($result as $fieldname) {
+        echo "<tr>";
+        echo "<td>".$fieldname['user_id']."</td>";
+        echo "<td>".$fieldname['fullname']."</td>";
+        echo "<td>".$fieldname['role']."</td>";
+        echo "<td>".$fieldname['username']."</td>";
+        echo "<td>".$fieldname['password']."</td>";
+        echo "<td>".$fieldname['email']."</td>";
+        echo "<td>".$fieldname['contact']."</td>";
+        echo "<td>".$fieldname['address']."</td>";
+        echo "<td>".$fieldname['status']."</td>";
+
+        echo "<td>
+        
+        <a href = 'delete_users.php?deleteusers=".$fieldname['user_id']."' class='delete' onclick='popup()'> delete </a>
+        
+        <a href = 'update_users.php?editusers=".$fieldname['user_id']."' class='edit'> edit </a>
+        
+        
+        </td>";
+        echo "<tr>";
+    }
+
+?>
+
+</table>
+
+<script>
+    function popup(){
+        confirm("Are you sure you want to delete this product?");
+    }
+</script>
+
+
+<?php
+   
+} else {
+    echo "no record found";
+}
+
+?>
+
+<!--  -->
+
+<!-- modal container - the add product form -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new user</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      
+<form action="admin_users.php" method="post">
+    <div class="container p-5 w-100 border border-primary rounded mt-5">
+    
+
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="display-1 text-primary">
+                Register
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+                <div class="form-outline">
+                    <input type="text" id="firstname" name="firstname" class="form-control" >
+                    <label class="form-label" id="firstname-label" for="firstname">First name</label>
+                </div>
+            </div>
+            <div class="col">
+            <div class="form-outline">
+                <input type="text" id="lastname" name="lastname" class="form-control " />
+                <label class="form-label" for="lastname">Last name</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+       
+        <div class="btn-group mx-5 text-center" id="btn-group-3" >
+            <div class="form-check form-check-inline ">
+                <input class="form-check-input" type="radio" name="Gender" id="inlineRadio1" value="Female" />
+                <label class="form-check-label" for="inlineRadio1">Female</label>
+            </div>
+
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Gender" id="inlineRadio2" value="Male" />
+                <label class="form-check-label" for="inlineRadio2">Male</label>
+            </div>
+
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Gender" id="inlineRadio3" value="Others"/>
+                <label class="form-check-label" for="inlineRadio3">Others</label>
+            </div>
+        </div>
+        <div class="row d-block">
+            <div class="col">
+                <span class="form-label ">Gender</span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col text">
+        <input type="text" id="form6Example4"  name="address" class="form-control" />
+        <label class="form-label" for="form6Example4">Address</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        <input type="text" id="email"  name="email" class="form-control" />
+        <label class="form-label" for="email">Email</label>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+        <input type="text" id="form6Example6" name="contact" class="form-control" />
+        <label class="form-label" for="form6Example6">Phone</label>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+        <textarea class="form-control" name="addinfo" id="form6Example7" rows="4"></textarea>
+        <label class="form-label" for="form6Example7">Additional information</label>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+        <input type="text" id="form6Example6" name="username" class="form-control" />
+        <label class="form-label" for="form6Example6">Username</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        <input type="password" id="form6Example6" name="password" class="form-control" />
+        <label class="form-label" for="form6Example6">Password</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        <select name="role" class="form-control" id="">
+            <option> Admin </option>
+            <option> Employee </option>
+        </select>
+        <label class="form-label" for="form6Example6">Role</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-3">  
+            <input type="submit"  name="sub" class="btn btn-primary btn-block w-100" value="Save Details" id=sub>
+        </div>
+    </div>
+    </form>
+
+</div>
+
+
+    
+
+    <?php
+
+
+
+
+if (isset($_POST['sub'])) {
+   $uFirstName = $_POST['firstname'];
+   $uLastName = $_POST['lastname'];
+   $uFullName = $uFirstName." ".$uLastName;
+   $uRole = $_POST['role'];
+   $uUsername = $_POST['username'];
+   $uPassword = md5($_POST['password']);
+   $uEmail = $_POST['email'];
+   $uContact = $_POST['contact'];
+   $uAddress = $_POST['address'];
+
+
+
+   $insertsql = "Insert into tbl_users (fullname,role,username,password,email,contact,address) values ('$uFullName','$uRole','$uUsername','$uPassword','$uEmaily','$uContact','$uAddress')";
+
+
+   $result = $conn->query($insertsql);
+
+         
+    $logssql = "insert into tbl_logs (user_id, action, date) values ('".$user_id."', 'Added new product',NOW())";
+
+    
+    $conn->query($logssql);
+
+
+   ?>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+
+
+
+    </div>
+<!-- table container -->
+
+</div>
+<!-- row container -->
+
+
+
+
+
+
+
+</div> 
+<!-- div container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+</body>
+</html>
+
+
+
+<?php
+
+if($result == TRUE){
+ ?>
+
+ <script>
+     Swal.fire({
+     position: "center",
+     icon: "success",
+     title: "Your work has been saved",
+     showConfirmButton: false,
+     timer: 1500
+     });
+ </script>
+
+
+ <?php
+
+}else{
+ echo $conn->error;
+}
+}
+
+
+
+
+
+
+?>
