@@ -1,0 +1,172 @@
+<?php
+
+require_once "dbconnection.php";
+
+
+session_start();
+
+
+
+
+
+?>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div class="container p-2 bg-light">
+
+<form action="user_product.php" method="post">
+        <div class="row g-5">
+            <div class="col-auto">
+            <input type="search" name="searchinput" id="" placeholder="Search" class="form-control">
+            </div>
+            <div class="col-auto">
+            <input type="submit" name = "search" value="Search" class="btn-primary btn">
+            </div>
+        </div>
+    </form>
+
+
+
+
+<?php
+
+
+
+
+
+$ccselectsql = "Select * from tbl_product";
+
+
+
+
+if (isset($_POST['search'])) {
+    $ccusersearch = $_POST['searchinput'];
+
+
+    $ccselectsql = "Select * from tbl_product where product_name like '%".$ccusersearch."%'
+    OR category like '%".$ccusersearch."%'
+    ";
+} else {
+    $ccselectsql = "Select * from tbl_product";
+}
+
+
+
+
+$ccresult = $conn->query($ccselectsql);
+
+
+if ($ccresult->num_rows > 0) {
+
+
+
+    echo "<div class=container align-items-center d-flex justify-content-center>";
+    echo "<div class='row'>";
+
+    foreach ($ccresult as $ccindex => $ccfieldname) {
+    
+
+    ?>
+
+    <div class="col-3">
+        <div class="container p-2 m-2 bg-secondary">
+            <div class="row">
+                <div class="col">
+                    <img src="<?php   echo $ccfieldname['img_path']    ?>" alt="" width = 100 height = 100>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <?php echo $ccfieldname['product_name']?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <?php echo "₱ ". $ccfieldname['price']?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <?php echo "Available quantity: ". $ccfieldname['available_quantity']?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <?php echo "Category: ". $ccfieldname['category']?>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+
+
+                   <a href="viewproduct.php?product=<?php echo $ccfieldname['product_id'] ?>">View Product</a>
+
+
+
+                    
+                </div>
+            </div>
+
+          <?php
+
+?>
+            
+
+
+        </div>
+    </div>
+
+
+   
+
+    
+
+
+    <?php
+
+
+   if (($ccindex+1)%4 == 0) {
+    echo "</div><div class=row>";
+   }
+
+
+
+    
+
+
+   
+} 
+
+echo "</div></div>";
+
+
+}
+
+else {
+    echo "no record found";
+}
+
+?>
+
+
+
+
+
+
+</div>
+</body>
+
+
+</html>
