@@ -1,0 +1,396 @@
+<?php
+   
+    session_start();
+
+  
+    $prod_id = $_SESSION['user_id'];
+
+ 
+
+?>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+         rel="stylesheet">
+    <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<!-- container -->
+<div class="container  column-gap-3">
+
+<div class="row">
+
+    <!-- sidebar container -->
+    <div class="col ms-0">
+
+    <nav class="navbar bg-light">
+    
+    <a href="admindashb.php" class="">Products</a>
+    <a href="usertable.php" class="">Users</a>
+
+    </nav>
+    
+
+    </div>
+    <!-- sidebar container -->
+
+
+    
+    <!-- table container -->
+    <div class="col-11">
+
+    <!-- search button -->
+
+<form action="admin_products.php" method="post">
+        <div class="row g-5">
+            <div class="col-auto">
+            <input type="search" name="searchinput" id="" placeholder="Search" class="form-control">
+            </div>
+            <div class="col-auto">
+            <input type="submit" name = "search" value="Search" class="btn-primary btn">
+            </div>
+        </div>
+</form>
+
+
+<!-- add new product button -->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add new product
+</button>
+
+<!-- php of displaying table -->
+
+<?php
+
+
+require_once "dbconnection.php";
+
+$selectsql = "Select * from tbl_logs";
+
+
+
+
+if (isset($_POST['search'])) {
+    $usersearch = $_POST['searchinput'];
+
+
+    $selectsql = "Select * from tbl_logs where user_id like '%".$usersearch."%'
+    OR date like '%".$usersearch."%'
+    ";
+} else {
+    $selectsql = "Select * from tbl_logs";
+}
+
+
+$result = $conn->query($selectsql);
+
+
+if ($result->num_rows > 0) {
+
+?>
+
+<table class="table table-success">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            User ID
+        </th>
+        <th>
+            Action
+        </th>
+        <th>
+            Date
+        </th>
+    </tr>
+
+
+<?php
+    foreach ($result as $fieldname) {
+        echo "<tr>";
+        echo "<td>".$fieldname['id']."</td>";
+        echo "<td>".$fieldname['user_id']."</td>";
+        echo "<td>".$fieldname['action']."</td>";
+        echo "<td>".$fieldname['date']."</td>";
+        echo "<td>
+        
+        <a href = 'delete.php?delete=".$fieldname['id']."' class='delete' onclick='popup()'> delete </a>
+        
+        <a href = 'update.php?edit=".$fieldname['id']."' class='edit'> edit </a>
+        
+        
+        </td>";
+        echo "<tr>";
+
+       
+    }
+
+?>
+
+</table>
+
+<script>
+    function popup(){
+        confirm("Are you sure you want to delete this product?");
+    }
+</script>
+
+
+<?php
+   
+} else {
+    echo "no record found";
+}
+
+?>
+
+<!--  -->
+
+<!-- modal container - the add product form -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      
+<form action="admin_products.php" method="post" enctype = "multipart/form-data">
+
+    <div class="container p-5 w-100 border border-primary rounded mt-5">
+    
+    <div class="row">
+        <div class="col">
+                <div class="form-outline">
+
+                <label class="form-label" id="productname-label" for="productname">Product Name: </label>
+                    <input type="text" id="ProductN" name="ProductName" class="form-control" >
+                    
+                </div>
+            </div>
+            
+    </div>
+
+    <br>
+
+
+    <div class="row">
+        <div class="col">
+
+        <label class="form-label" for="form6Example7">Product Description: </label>
+        <textarea class="form-control" name="ProductDesc" id="form6Example7" rows="4"></textarea>
+        
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col text">
+
+        <label class="form-label" for="form6Example7">Set Price: </label>
+
+        <div class="input-group mb-3">
+
+         <span class="input-group-text">₱</span>
+         <input type="text" class="form-control" name="ProductPrice">
+            <span class="input-group-text">.00</span>
+
+        </div>
+        
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+
+        <label class="form-label" for="form6Example7">Available Quantity: </label>
+        <input type="number" class="form-control" name="ProductQuantity" min = "0" max = "100">
+        
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+
+        <label class="form-label" for="form6Example6">Product Category: </label>
+
+        <select name="ProductCategory" class="form-control" id="">
+            <option disabled selected> Please select product category</option>
+            <option> 1</option>
+            <option> 2</option>
+            <option> 3</option>
+        </select>
+      
+        </div>
+    </div>
+
+    <br>
+
+    <label class="form-label" for="form6Example7">Upload Product Display Image: </label>
+
+    <div class="row ">
+        <div class="col">
+            <img src="" alt="" id="preview_img" width=200 height=200  class="img-thumbnail mx-auto d-block">
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col">
+            <input type="file" name="upload_img" id="" class="form-control w-25 mx-auto d-block" onchange = "previewImg(event)">
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col mt-3">  
+            <input type="submit"  name="sub" class="btn btn-primary btn-block w-100" value="Save Details" id=sub>
+        </div>
+    </div>
+    </form>
+
+</div>
+
+
+    
+
+    <?php
+
+
+
+
+if (isset($_POST['sub'])) {
+   $pName = $_POST['ProductName'];
+   $pDesc = $_POST['ProductDesc'];
+   $pPrice = $_POST['ProductPrice'];
+   $pQuantity = $_POST['ProductQuantity'];
+   $pCategory = $_POST['ProductCategory'];
+
+   $imagepath = "img/".basename($_FILES["upload_img"]["name"]);
+
+   copy($_FILES["upload_img"]["tmp_name"],$imagepath);
+
+
+
+   $insertsql = "Insert into tbl_product (product_name,description,price,available_quantity,category,img_path) values ('$pName','$pDesc',$pPrice,$pQuantity,'$pCategory','$imagepath')";
+
+   
+   $results = $conn->query($insertsql);
+
+     $last_id = $conn->insert_id;
+
+    $inventorysql = "Insert into tbl_inventory (product_id, quantity_in_stock,last_stock_update) values ($last_id,$pQuantity,NOW())";
+
+    $conn->query($inventorysql);
+
+      
+    $logssql = "insert into tbl_logs (user_id, action, date) values ('".$prod_id."', 'Added new Product',NOW())";
+
+    
+    $conn->query($logssql);
+
+
+
+   
+   ?>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+
+
+    </div>
+    <!-- table container -->
+
+</div>
+
+<!-- row container -->
+
+<?php
+
+if($results == TRUE){
+
+ ?>
+
+ <script>
+     Swal.fire({
+     position: "center",
+     icon: "success",
+     title: "Your work has been saved",
+     showConfirmButton: false,
+     timer: 1500
+     });
+ </script>
+
+
+ <?php
+
+}else{
+ echo $conn->error;
+}
+
+
+}
+
+
+
+
+
+?>
+
+
+
+
+</div> 
+<!-- container -->
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+
+
+function previewImg(event) {
+    
+
+    var displaying = document.getElementById ("preview_img");
+    displaying.src = URL.createObjectURL(event.target.files[0]);
+
+}
+
+</script>
+
+
+</body>
+</html>
+
+
+
