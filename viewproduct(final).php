@@ -31,11 +31,38 @@ $userID = $_SESSION['user_id'];
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
   rel="stylesheet"  type='text/css'>
   <script src="https://kit.fontawesome.com/e0b3cf36af.js" crossorigin="anonymous"></script>
-    
+    <style>
+        @import "design.css";
+    </style>
 </head>
 <body>
   
-<div class="container">
+<!-- Navbar -->
+    <div id="navbarContainer">
+      <div>
+        <ul class="nav justify-content-center" id="navbarContent">
+          <li class="nav-item">
+            <a class="nav-link" href="home.php">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user_product.php">PRODUCTS</a>
+          </li>
+          <li class="nav-item" id="logoNav">
+            <a class="nav-link" href="#">
+              <img src="images/logo.jpg" class="img-fluid" alt="logo" />
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="shopping_cart.php">ORDERS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="loginpage.php">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+<div class="container pt-5 pb-5 mt-5 mb-5 border border-danger rounded" style="background-color: #c7b9b7">
 
 <?php
 
@@ -47,12 +74,12 @@ $selectsql = "select * from tbl_product where product_id = $productID";
     $fielddata = $result->fetch_assoc();
 
  } else {
-    echo "o products found!";
+    echo "0 products found!";
  }
 
 
 // sql for cart count
- $cartHeadsql = "select * from tbl_cart";
+ $cartHeadsql = "select * from tbl_cart where user_id = '$userID'";
 
 
  $cartCount = mysqli_num_rows($conn->query($cartHeadsql));
@@ -60,23 +87,23 @@ $selectsql = "select * from tbl_product where product_id = $productID";
 
 ?>
 <!-- cart icon with number -->
-<a href="shopping_cart.php" class="cart"><i class="fa-solid fa-cart-shopping"></i><span><sup><?php echo $cartCount    ?></sup></span></a>
+<a style="color: #5c1812" href="shopping_cart.php" class="cart"><i class="fa-solid fa-cart-shopping"></i><span><sup><?php echo $cartCount    ?></sup></span></a>
 <!-- cart icon with number -->
 
 
 <!-- add to cart form -->
 <form action="" method="post">
 
-<h1>Product <?php echo $productID     ?></h1>
+<h1 style="color: #5c1812">Product <?php echo $productID     ?></h1>
 
 <div class="row">
     <div class="col">
 
 <img src="<?php echo $fielddata['img_path']     ?>" alt="" width=200 height=200>
 
-<h2><?php echo $fielddata['product_name']     ?></h2>
+<h2 style="color: #5c1812"><?php echo $fielddata['product_name']     ?></h2>
 
-<h3><?php echo $fielddata['price']      ?></h3>
+<h3 style="color: #5c1812"><?php echo $fielddata['price']      ?></h3>
 
 <input type="submit" class="submit_btn cart_btn" value="Add to cart" name="cart">
 
@@ -94,7 +121,35 @@ $selectsql = "select * from tbl_product where product_id = $productID";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+<!-- Footer -->
+    <div id="footerContainer">
+      <div id="footerContent">
+        <div id="footLeft">
+          <div id="logoFooterContainer">
+            <a class="nav-link" href="#">
+              <img src="images/logo.jpg" class="img-fluid" alt="logo" />
+            </a>
+          </div>
+          <div id="leftFootTxt">
+            <p id="address">Wine Craft</p>
+            <p>
+              0325 Stray Kids St., <br />
+              Kwangya City, South Korea <br />
+              9AM to 5PM
+            </p>
+          </div>
+        </div>
+        <div id="footRight">
+          <div id="rightFootTxt" class="float-end">
+            <p>
+              winecraft@gmail.com <br />
+              +011 811 1003
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 
 
 </body>
@@ -141,7 +196,7 @@ if (isset($_POST['cart'])) {
         showConfirmButton: false,
         timer: 1500
         }).then(() => {
-            window.location.href = "shopping_Cart.php";
+            window.location.href = "shopping_cart.php";
         });
         </script>
 
@@ -161,7 +216,7 @@ if (isset($_POST['cart'])) {
         showConfirmButton: false,
         timer: 1500
         }).then(() => {
-            window.location.href = "shopping_Cart.php";
+            window.location.href = "shopping_cart.php";
         });
         </script>
 
@@ -174,13 +229,8 @@ if (isset($_POST['cart'])) {
   
 }
 
-//cart php
-
 
 
 
 
 ?>
-
-
-
