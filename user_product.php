@@ -1,24 +1,41 @@
-<?php
-
-require_once "dbconnection.php";
-
-
-session_start();
-
-
-
-
-
-?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        @import "design.css";
+    </style>
 </head>
 <body>
-<div class="container p-2 bg-light">
+
+<!-- Navbar -->
+    <div id="navbarContainer">
+      <div>
+        <ul class="nav justify-content-center" id="navbarContent">
+          <li class="nav-item">
+            <a class="nav-link" href="home.php">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">PRODUCTS</a>
+          </li>
+          <li class="nav-item" id="logoNav">
+            <a class="nav-link" href="#">
+              <img src="images/logo.jpg" class="img-fluid" alt="logo" />
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="shopping_cart.php">ORDERS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="loginpage.php">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+<div class="container mt-5 mb-5 p-4 border border-danger rounded" style="background-color: #c7b9b7">
 
 <form action="user_product.php" method="post">
         <div class="row g-5">
@@ -38,6 +55,15 @@ session_start();
 
 
 
+
+require_once "dbconnection.php";
+
+
+// if (!$conn->connect_error) {
+//     echo "connected";
+// }
+
+session_start();
 
 
 $ccselectsql = "Select * from tbl_product";
@@ -75,7 +101,7 @@ if ($ccresult->num_rows > 0) {
     ?>
 
     <div class="col-3">
-        <div class="container p-2 m-2 bg-secondary">
+        <div class="container p-2 m-2" style="background-color: #5c1812">
             <div class="row">
                 <div class="col">
                     <img src="<?php   echo $ccfieldname['img_path']    ?>" alt="" width = 100 height = 100>
@@ -84,25 +110,25 @@ if ($ccresult->num_rows > 0) {
 
             <div class="row">
                 <div class="col">
-                    <?php echo $ccfieldname['product_name']?>
+                    <p style="color: #f0e7e1"> <?php echo $ccfieldname['product_name']?> </p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                    <?php echo "₱ ". $ccfieldname['price']?>
+                    <p style="color: #f0e7e1"> <?php echo "₱ ". $ccfieldname['price']?> </p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                    <?php echo "Available quantity: ". $ccfieldname['available_quantity']?>
+                   <p style="color: #f0e7e1">  <?php echo "Available quantity: ". $ccfieldname['available_quantity']?> </p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                    <?php echo "Category: ". $ccfieldname['category']?>
+                    <p style="color: #f0e7e1"> <?php echo "Category: ". $ccfieldname['category']?> </p>
                 </div>
             </div>
 
@@ -111,7 +137,7 @@ if ($ccresult->num_rows > 0) {
                 <div class="col">
 
 
-                   <a href="viewproduct.php?product=<?php echo $ccfieldname['product_id'] ?>">View Product</a>
+                <a class="view-link" href="viewproduct.php?product=<?php echo $ccfieldname['product_id'] ?>">View Product</a>
 
 
 
@@ -119,9 +145,7 @@ if ($ccresult->num_rows > 0) {
                 </div>
             </div>
 
-          <?php
-
-?>
+           
             
 
 
@@ -166,6 +190,36 @@ else {
 
 
 </div>
+
+<!-- Footer -->
+    <div id="footerContainer">
+      <div id="footerContent">
+        <div id="footLeft">
+          <div id="logoFooterContainer">
+            <a class="nav-link" href="#">
+              <img src="images/logo.jpg" class="img-fluid" alt="logo" />
+            </a>
+          </div>
+          <div id="leftFootTxt">
+            <p id="address">Wine Craft</p>
+            <p>
+              0325 Stray Kids St., <br />
+              Kwangya City, South Korea <br />
+              9AM to 5PM
+            </p>
+          </div>
+        </div>
+        <div id="footRight">
+          <div id="rightFootTxt" class="float-end">
+            <p>
+              winecraft@gmail.com <br />
+              +011 811 1003
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 </body>
 
 
