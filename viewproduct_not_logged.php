@@ -3,13 +3,6 @@
 
 require_once "dbconnection.php";
 
-session_start();
-
-
-$productID = $_GET['product'];
-
-$userID = $_SESSION['user_id'];
-
 
 ?>
 
