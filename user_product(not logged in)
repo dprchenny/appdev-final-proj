@@ -137,7 +137,7 @@ if ($ccresult->num_rows > 0) {
                 <div class="col">
 
 
-                <a class="view-link" href="viewproduct_not_logged.php?product=<?php echo $ccfieldname['product_id'] ?>">View Product</a>
+                <a class="view-link" href="viewproduct_not_logged.php">View Product</a>
 
 
 
